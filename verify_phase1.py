@@ -7,6 +7,8 @@ and their contracts are correctly defined.
 Run this to verify Phase 1 completion.
 """
 
+from datetime import datetime, timedelta
+
 def verify_imports():
     """Verify all imports work"""
     print("=" * 60)
@@ -191,7 +193,7 @@ def verify_window_extraction():
             cluster_id="test",
             node_id="test",
             metric_name="test",
-            timestamps=[datetime(2025, 1, 1, 0, i, 0) for i in range(100)],
+            timestamps=[datetime(2025, 1, 1, 0, 0, 0) + timedelta(minutes=i) for i in range(100)],
             values=[50.0 + i * 0.1 for i in range(100)],
         )
         

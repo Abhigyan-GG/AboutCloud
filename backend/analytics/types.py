@@ -140,14 +140,13 @@ class AggregatedAnomalyScore:
     Enables roll-up analytics for dashboard display.
     """
     tenant_id: str
+    aggregate_score: float
+    
     cluster_id: Optional[str] = None  # None if aggregating at tenant level
     node_id: Optional[str] = None      # None if aggregating at cluster level
     
     # Aggregation strategy used (max, mean, weighted_mean, etc.)
     aggregation_strategy: str = "max"
-    
-    # Aggregated score
-    aggregate_score: float
     
     # Metadata
     num_metrics_analyzed: int = 0
