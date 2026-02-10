@@ -148,15 +148,14 @@ All ingestion, analytics, and queries are **tenant-aware by design**.
 
 ## Team Roles & Contributors
 
-- **Analytics Lead — @Abhigyan-GG**  
+- **Analytics Lead — [Abhigyan-GG](https://github.com/Abhigyan-GG)**  
   Responsible for anomaly analytics orchestration, aggregation, ranking, and explanation logic.
 
-- **Backend Lead — @Saivats**  
+- **Backend Lead — [Saivats](https://github.com/saivats)**  
   Responsible for ingestion pipelines, storage layers, scheduling, and core APIs.
 
-- **Dashboard / UI Lead — @vabhravi**  
-  Responsible for frontend dashboard design, visualizations, and user interactions.
-
+- **Dashboard / UI Lead — [Vabhravi](https://github.com/vabhravi)**  
+  Leads the design of the user-facing analytics layer, translating backend anomaly insights into clear, interactive visualizations and dashboards for system monitoring and decision-making.
 ---
 
 ## Academic Positioning
