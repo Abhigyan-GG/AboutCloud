@@ -277,3 +277,34 @@ class TimeBasedWindowExtractor:
             if ts >= target:
                 return i
         return len(timestamps)  # All points are < target
+
+
+def _demo() -> None:
+    """Run a quick demo of sliding window extraction."""
+    start = datetime(2025, 1, 1, 0, 0, 0)
+    timestamps = [start + timedelta(minutes=i) for i in range(120)]
+    values = [50 + (i % 10) for i in range(120)]
+
+    series = MetricSeries(
+        tenant_id="demo-tenant",
+        cluster_id="demo-cluster",
+        node_id="node-001",
+        metric_name="cpu_usage",
+        timestamps=timestamps,
+        values=values,
+    )
+
+    extractor = SlidingWindowExtractor(window_size_points=30, stride_points=15)
+    windows = extractor.extract(series)
+
+    print("Sliding Window Demo")
+    print("=" * 60)
+    print(f"Total points: {len(series.values)}")
+    print(f"Windows extracted: {len(windows)}")
+    if windows:
+        first = windows[0]
+        print(f"First window: {first.size} points, {first.start_time} → {first.end_time}")
+
+
+if __name__ == "__main__":
+    _demo()

@@ -235,3 +235,36 @@ class IngestionPipeline:
                 summary.append(f"  ... and {len(stats.errors) - 5} more")
         
         return "\n".join(summary)
+
+
+def _demo() -> None:
+    """Run a quick ingestion pipeline demo."""
+    from datetime import timedelta
+    from backend.ingestion.collector import SimulatorSource
+    from backend.storage.memory_storage import InMemoryStorage
+    
+    storage = InMemoryStorage()
+    collector = MetricCollector(SimulatorSource())
+    validator = MetricValidator()
+    pipeline = IngestionPipeline(collector, validator, storage)
+
+    start_time = datetime(2025, 1, 1, 0, 0, 0)
+    end_time = start_time + timedelta(hours=1)
+
+    series_list, stats = pipeline.ingest_cluster(
+        tenant_id="demo-tenant",
+        cluster_id="demo-cluster",
+        node_ids=["node-001", "node-002"],
+        metric_name="cpu_usage",
+        start_time=start_time,
+        end_time=end_time,
+    )
+
+    print("Ingestion Pipeline Demo")
+    print("=" * 60)
+    print(pipeline.get_stats_summary(stats))
+    print(f"Stored series: {len(series_list)}")
+
+
+if __name__ == "__main__":
+    _demo()

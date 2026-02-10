@@ -450,3 +450,41 @@ class AggregationPipeline:
             node_scores[key] = agg
         
         return node_scores
+
+
+def _demo() -> None:
+    """Run a quick demo of aggregation hierarchy."""
+    now = datetime.utcnow()
+    results = []
+    for i, score in enumerate([0.1, 0.25, 0.4, 0.95, 0.7]):
+        results.append(
+            AnomalyResult(
+                tenant_id="demo-tenant",
+                cluster_id="demo-cluster",
+                node_id=f"node-{i:03d}",
+                metric_name="cpu_usage",
+                window_start=now,
+                window_end=now,
+                anomaly_score=score,
+                anomaly_label="spike" if score > 0.9 else "normal",
+            )
+        )
+
+    node_agg = NodeAnomalyAggregator(strategy=AggregationStrategy.MAX)
+    node_scores = [node_agg.aggregate([r]) for r in results]
+
+    cluster_agg = ClusterAnomalyAggregator(strategy=AggregationStrategy.MAX)
+    cluster_score = cluster_agg.aggregate(node_scores)
+
+    tenant_agg = TenantAnomalyAggregator(strategy=AggregationStrategy.MAX)
+    tenant_score = tenant_agg.aggregate([cluster_score])
+
+    print("Aggregation Demo")
+    print("=" * 60)
+    print(f"Node scores: {[round(n.aggregate_score, 2) for n in node_scores]}")
+    print(f"Cluster score: {cluster_score.aggregate_score:.2f}")
+    print(f"Tenant score: {tenant_score.aggregate_score:.2f}")
+
+
+if __name__ == "__main__":
+    _demo()

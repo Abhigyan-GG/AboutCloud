@@ -222,3 +222,45 @@ class InMemoryStorage(StorageBackend):
             "total_anomalies": total_anomalies,
             "total_aggregated_scores": total_aggregated,
         }
+
+
+def _demo() -> None:
+    """Run a quick demo of in-memory storage."""
+    from datetime import datetime, timedelta
+    from backend.analytics.types import MetricSeries
+
+    storage = InMemoryStorage()
+
+    start = datetime(2025, 1, 1, 0, 0, 0)
+    timestamps = [start + timedelta(minutes=i) for i in range(10)]
+    values = [50 + i for i in range(10)]
+
+    series = MetricSeries(
+        tenant_id="demo-tenant",
+        cluster_id="demo-cluster",
+        node_id="node-001",
+        metric_name="cpu_usage",
+        timestamps=timestamps,
+        values=values,
+    )
+
+    storage.store_metric(series)
+    retrieved = storage.get_metric_series(
+        tenant_id="demo-tenant",
+        cluster_id="demo-cluster",
+        node_id="node-001",
+        metric_name="cpu_usage",
+        start_time=start,
+        end_time=start + timedelta(minutes=9),
+    )
+
+    print("InMemoryStorage Demo")
+    print("=" * 60)
+    print(f"Stored points: {len(series.values)}")
+    print(f"Retrieved points: {len(retrieved.values)}")
+    print(f"First value: {retrieved.values[0]}")
+    print(f"Last value: {retrieved.values[-1]}")
+
+
+if __name__ == "__main__":
+    _demo()
