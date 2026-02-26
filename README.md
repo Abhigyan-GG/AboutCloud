@@ -28,7 +28,6 @@ An existing open-source anomaly detection engine is treated as a **pluggable com
 AboutCloud follows a **modular, layered architecture** with strict separation of concerns:
 
 ```
-
 Metric Ingestion
 ↓
 Hot Storage (Time-Series Data)
@@ -42,7 +41,6 @@ Query APIs
 Dashboard (Plain JavaScript)
 ↓
 Cold Storage (Archival)
-
 ```
 
 The anomaly detection logic is **engine-agnostic** and can be replaced without impacting the rest of the system.
@@ -52,7 +50,6 @@ The anomaly detection logic is **engine-agnostic** and can be replaced without i
 ## Project Structure
 
 ```
-
 project-root/
 ├── backend/
 │   ├── api/            # REST APIs (ingestion, queries, admin)
@@ -66,7 +63,6 @@ project-root/
 ├── frontend/           # Plain JS dashboard
 │
 └── README.md
-
 ```
 
 ---
@@ -89,12 +85,10 @@ Instead, AboutCloud focuses on **how anomaly detection results are orchestrated,
 AboutCloud supports multiple tenants using a hierarchical data model:
 
 ```
-
 Tenant
 └── Cluster
 └── Node
 └── Metrics (time series)
-
 ```
 
 All ingestion, analytics, and queries are **tenant-aware by design**.
@@ -125,34 +119,43 @@ All ingestion, analytics, and queries are **tenant-aware by design**.
 
 ## Project Phases
 
-### Phase 1 — Foundation & Architecture
-- Define system architecture and data models
-- Implement ingestion and hot storage
-- Create analytics pipeline scaffolding
+### Phase 1 — Architecture & Plumbing
+- Define overall system architecture
+- Finalize tenant and data models
+- Create analytics and backend scaffolding
 
-### Phase 2 — Anomaly Engine Integration
+### Phase 2 — Data Ingestion
+- Implement tenant-aware ingestion APIs
+- Integrate metric simulator
+- Store incoming metrics in hot storage
+
+### Phase 3 — Real Anomaly Detection
 - Integrate anomaly detection engine
 - Implement sliding window execution
-- Store, aggregate, and rank anomaly scores
+- Compute, store, and aggregate anomaly scores
 
-### Phase 3 — Dashboard & Data Lifecycle
-- Build interactive dashboards
+### Phase 4 — API + Dashboard
+- Expose analytics and ranking APIs
+- Build interactive dashboard views
+- Enable anomaly exploration and drill-down
+
+### Phase 5 — Production Readiness
 - Implement hot-to-cold data archival
-- Add admin and system monitoring views
+- Add admin and system health monitoring
+- Performance tuning and stability checks
 
 ---
 
-## Team Roles
+## Team Roles & Contributors
 
-- **Analytics Lead - @Abhigyan-GG**  
-  Owns anomaly analytics orchestration, aggregation, ranking, and explanation logic.
+- **Analytics Lead — [Abhigyan-GG](https://github.com/Abhigyan-GG)**  
+  Responsible for anomaly analytics orchestration, aggregation, ranking, and explanation logic.
 
-- **Backend Lead - @saivats**  
-  Owns ingestion pipelines, storage layers, scheduling, and APIs.
+- **Backend Lead — [Saivats](https://github.com/saivats)**  
+  Responsible for ingestion pipelines, storage layers, scheduling, and core APIs.
 
-- **Dashboard/UI Lead - @vabhravi**  
-  Owns frontend dashboard design and user interactions.
-
+- **Dashboard / UI Lead — [Vabhravi](https://github.com/vabhravi)**  
+  Leads the design of the user-facing analytics layer, translating backend anomaly insights into clear, interactive visualizations and dashboards for system monitoring and decision-making.
 ---
 
 ## Academic Positioning
