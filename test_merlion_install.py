@@ -29,7 +29,7 @@ except ImportError as e:
     print(f"❌ Scikit-learn: {e}")
 
 try:
-    from merlion.models.anomaly import IsolationForest
+    from merlion.models.anomaly.isolation_forest import IsolationForest
     print(f"✅ Merlion IsolationForest imported successfully!")
     print("\n🎉 ALL DEPENDENCIES INSTALLED CORRECTLY!")
 except ImportError as e:
