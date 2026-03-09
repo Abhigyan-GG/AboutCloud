@@ -21,10 +21,10 @@ try:
     from merlion.models.anomaly.isolation_forest import IsolationForest, IsolationForestConfig
 
     HAS_MERLION_IF = True
-    print("✅ Merlion IsolationForest imported successfully")
+    print("[OK] Merlion IsolationForest imported successfully")
 except ImportError as e:
     HAS_MERLION_IF = False
-    print(f"⚠️ Merlion IsolationForest import failed: {e}")
+    print(f"[WARNING] Merlion IsolationForest import failed: {e}")
 
 # Fallback to sklearn
 try:
